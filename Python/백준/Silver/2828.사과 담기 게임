@@ -1,0 +1,21 @@
+N, M = map(int, input().split())
+J = int(input())
+
+nowStart = 1
+nowEnd = M
+move = 0
+
+for i in range(J):
+    apple = int(input())
+    if nowStart <= apple <= nowEnd:
+        pass
+    elif apple < nowStart:
+        move += nowStart - apple
+        nowStart = apple
+        nowEnd = apple + M - 1
+    else:
+        move += apple - nowEnd
+        nowEnd = apple
+        nowStart = apple - M + 1
+    
+print(move)
