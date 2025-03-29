@@ -1,15 +1,10 @@
-import java.util.*;
 class Solution {
     public String solution(String phone_number) {
-        String answer = "";
-        int num = phone_number.length() - 4;
-        for(int i=0; i<num; i++){
-            answer += "*";
-        }
+        char[] ch = phone_number.toCharArray();
         
-        for (int i=0; i<4; i++){
-            answer += phone_number.charAt(num+i);
+        for (int i=0; i<phone_number.length()-4; i++){
+            ch[i] = '*';
         }
-        return answer;
+        return String.valueOf(ch);
     }
 }
