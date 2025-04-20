@@ -6,6 +6,7 @@ class Solution {
         // 문자열 기준으로 대소 변경
         // 공백이 2개 이상 연속일때 생각하기
         
+        // 공백도 받기 위해 -1
         String[] arr = s.split(" ", -1);
         
         for (String str : arr) {    // 나눈 문자별로 수행
