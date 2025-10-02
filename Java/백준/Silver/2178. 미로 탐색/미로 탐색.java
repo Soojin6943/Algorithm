@@ -1,6 +1,12 @@
+
 import java.util.Scanner;
 import java.util.Deque;
 import java.util.ArrayDeque;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
 
 public class Main {
     static boolean[][] visited;
@@ -43,15 +49,18 @@ public class Main {
         }
 
     }
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
         // 최소 칸수 -> 너비 우선 탐색?
         // 시작 도착 위치 포함
         // 큐 사용 (데크)
 
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt(), M = sc.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//        Scanner sc = new Scanner(System.in);
+        String nm = br.readLine();
+        StringTokenizer st = new StringTokenizer(nm);
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
         arr = new int[N][M];
-        sc.nextLine();
 
         visited = new boolean[N][M];
         cnt = new int[N][M];
@@ -59,9 +68,10 @@ public class Main {
 
         // 미로 만들기
         for (int i=0; i<N; i++){
-            String str = sc.nextLine();
+            String str = br.readLine();
+            String[] ar = (str.split(""));
             for (int j=0; j<M; j++){
-                arr[i][j] = str.charAt(j) - '0';
+                arr[i][j] = Integer.parseInt(ar[j]);
 //                System.out.print(arr[i][j]);
             }
 //            System.out.println();
