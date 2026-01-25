@@ -1,22 +1,18 @@
-import java.util.*;
-
 class Solution {
-    private int answer;
+    int answer = 0;
     
-    private void dfs (int[] numbers, int target, int depth,int res){
-        if (depth == numbers.length){   // 마지막 노드이면
-            if (res == target)  // 타겟노드와 결과가 같으면 1 증가
-                answer += 1;
-        } else {
-            // + 계산
-            dfs(numbers, target, depth+1, res + numbers[depth]);
-            // - 계산
-            dfs(numbers, target, depth+1, res - numbers[depth]);
+    public void dfs (int sum, int i, int target, int lastIdx, int[] numbers) {
+        if (i == lastIdx) {
+            if (sum == target) answer++;
+            return;
         }
+        
+        dfs(sum + numbers[i], i+1, target, lastIdx, numbers);
+        dfs(sum - numbers[i], i+1, target, lastIdx, numbers);
     }
-    
     public int solution(int[] numbers, int target) {
-        dfs(numbers, target, 0, 0);
+        
+        dfs(0, 0, target, numbers.length, numbers);
         
         return answer;
     }
