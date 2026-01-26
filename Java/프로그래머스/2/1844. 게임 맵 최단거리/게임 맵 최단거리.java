@@ -1,61 +1,53 @@
-import java.util.ArrayDeque;
+import java.util.*;
 
 class Solution {
+    // 검은색 0 = 이동 불가, 흰색 1 = 이동 가능
+    // 동, 서, 남, 북 이동 가능
+    // 맵 내 이동, 벗어나기 불가능
+    // 상대 진영까지 최소 거리 구하기 <- 너비 우선 탐색
+    // 도착 할 수 없을 때는 -1
     
-    // 이동할 수 있는 방향을 나타내는 배열들
-    private static final int[] rx = {0, 0, 1, -1};
-    private static final int[] ry = {1, -1, 0, 0};
-    
-    private static class Node {
-        int r, c;
-        public Node(int r, int c) {
-            this.r = r;
-            this.c = c;
-        }
-    }
+    boolean[][] visited;
+    int[] dn = {0, 0, 1, -1};
+    int[] dm = {1, -1, 0, 0};
     
     public int solution(int[][] maps) {
-        // 맵의 크기를 저장하는 변수
-        int N = maps.length;
-        int M = maps[0].length;
+        int answer = 0;
+        int n = maps.length;
+        int m = maps[0].length;
         
-        // 최단거리 저장할 배열
-        int[][] dist = new int[N][M];
+        visited = new boolean[n][m];
         
-        // bfs 탐색을 위한 큐
-        ArrayDeque<Node> queue = new ArrayDeque<>();
+        answer = bfs(maps, 0, 0, n, m);
+        return answer;
+    }
+    
+    private int bfs(int[][] maps, int sn, int sm, int n, int m) {
+        Deque<int[]> que = new ArrayDeque<>();
         
-        // 시작 정점에 대해서 큐에 추가, 최단 거리 저장
-        queue.addLast(new Node(0,0));
-        dist[0][0] = 1;
+        visited[sn][sm] = true;
+        que.add(new int[]{sn, sm, 1});
         
-        // 큐가 빌때까지 반복
-        while (!queue.isEmpty()){
-            Node now = queue.pollFirst();
-            
-            // 현재 위치에서 이동할 수 있는 모든 방향
-            for (int i=0; i<4; i++){
-                int nr = now.r + rx[i];
-                int nc = now.c + ry[i];
-                
-                // 맵 밖으로 나가는 경우 예외 처리
-                if (nr < 0 || nc < 0 || nr >= N || nc >= M){
-                    continue;
-                }
-                
-                // 벽인 경우 예외 처리
-                if (maps[nr][nc]==0)
-                    continue;
-                
-                // 이동한 위치가 처음 방문하는 경우, queue에 추가하고 거리 갱신
-                if(dist[nr][nc]==0) {
-                    queue.addLast(new Node(nr, nc));
-                    dist[nr][nc] = dist[now.r][now.c] + 1;
+        while(!que.isEmpty()) {
+            int[] cur = que.poll();
+            // 상대 진영인지 확인
+            if (cur[0] == n-1 && cur[1] == m-1) {
+                return cur[2];
+            }
+            for (int i=0; i<4; i++) {
+
+                // 다음 이동 칸
+                int nn = cur[0] + dn[i];
+                int nm = cur[1] + dm[i];
+
+                if (nn < 0 || nm < 0 || nn >= n || nm >= m) continue;
+
+                if (!visited[nn][nm] && maps[nn][nm] == 1) {
+                    visited[nn][nm] = true;
+                    que.add(new int[]{nn, nm, cur[2] + 1});
                 }
             }
         }
-        
-        // 최단 거리 반환, 도달 못하면 -1
-        return dist[N-1][M-1] == 0 ? -1 : dist[N-1][M-1];
+        return -1;
     }
 }
