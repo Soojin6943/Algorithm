@@ -1,44 +1,41 @@
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 class Solution {
     public int[] solution(String s) {
-        int[] answer;
+        List<int[]> list = new ArrayList<>();
         
+        int start = 0;
+        int end = 0;
         
-        // 숫자 , 나온 횟수
-        HashMap<Integer, Integer> map = new HashMap<>();
-        String[] str = s.split(",");
-        for (String st : str){
-            StringBuilder sb = new StringBuilder();
-            for (char c : st.toCharArray()){
-                if (c == '{' || c == '}' || c == ','){
-                    continue;
-                } else {
-                    sb.append(c);
+        for (int i=1; i<s.length()-1; i++) {
+            if (s.charAt(i) == '{') {
+                start = i+1;
+            } else if ( s.charAt(i) == '}') {
+                end = i;
+                String[] sub = s.substring(start, end).split(",");
+                int[] num = new int[sub.length];
+                for (int j=0; j<num.length; j++) {
+                    num[j] = Integer.parseInt(sub[j]);
                 }
+                list.add(num);
             }
-            int num = Integer.parseInt(sb.toString());
-            map.put(num, map.getOrDefault(num, 0) + 1);
         }
         
-        System.out.println(map);
+        Collections.sort(list, (o1, o2) -> {
+            return o1.length - o2.length;
+        });
         
-        // 횟수가 많은 것부터 넣기
-        List<Integer> keySet = new ArrayList<>(map.keySet());
-        // 횟수 내림차순 정렬
-        keySet.sort((o1, o2) -> map.get(o2).compareTo(map.get(o1)));
-    
-        System.out.println(keySet);
+        List<Integer> result = new ArrayList<>();
         
-//         answer = new int[map.size()];
+        for (int[] in : list) {
+            for (int i : in) {
+                if (!result.contains(i)) {
+                    result.add(i);
+                    break;
+                }
+            }
+        }
         
-//         for(int num : keySet){
-//             int i = 0;
-//             answer[i] = num;
-//             i++;
-//         }
-        return keySet.stream().mapToInt(Integer::intValue).toArray();
+        return result.stream().mapToInt(i->i).toArray();
     }
 }
