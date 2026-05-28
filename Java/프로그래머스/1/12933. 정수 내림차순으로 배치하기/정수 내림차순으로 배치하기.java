@@ -1,23 +1,23 @@
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+
 class Solution {
     public long solution(long n) {
         long answer = 0;
         
-        String nn = n + "";
-        String[] ch = nn.split("");
-        int[] ci = new int[ch.length];
+        List<Integer> list = new ArrayList<>();
         
-        for(int i=0; i<ch.length; i++){
-            ci[i] = Integer.parseInt(ch[i]);
+        while (n > 0) {
+            list.add((int)(n % 10));
+            n = n / 10;
         }
         
-        Arrays.sort(ci);
-        StringBuffer sb = new StringBuffer();
-        for (int i=0; i<ci.length; i++){
-            sb.append(ci[ci.length - i-1]);
-        }
+        list.sort((o1, o2) -> o2.compareTo(o1));
         
-        answer = Long.parseLong(sb.toString());
+        for (int i=0; i<list.size(); i++) {
+            answer *= 10;
+            answer += list.get(i);
+        }
         return answer;
     }
 }
