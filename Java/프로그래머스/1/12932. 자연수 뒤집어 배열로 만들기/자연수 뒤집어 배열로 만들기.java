@@ -1,20 +1,19 @@
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 class Solution {
     public int[] solution(long n) {
+        List<Integer> list = new ArrayList<>();
         
+        while (n > 0) {
+            list.add((int)(n % 10));
+            n = n / 10;
+        }
         
-        // 1.자연수를 문자열로
-        String s = n + "";
-        // 2. 문자열 쪼개기
-        String[] ss = s.split("");
+        int[] answer = new int[list.size()];
         
-        // System.out.println(ss[0]);  // 스플릿 확인
-        int[] answer = new int[ss.length];
-        
-        for (int i=0; i<ss.length; i++){
-            
-            answer[i] = Integer.parseInt(ss[ss.length-i-1]);
+        for (int i = 0; i<list.size(); i++) {
+            answer[i] = list.get(i);
         }
         
         return answer;
