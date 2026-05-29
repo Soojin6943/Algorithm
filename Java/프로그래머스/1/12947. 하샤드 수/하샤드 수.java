@@ -1,19 +1,13 @@
 class Solution {
     public boolean solution(int x) {
-        boolean answer = true;
-        int sum = 0;
+        int hap = 0;
+        int real = x;
         
-        // 1. x를 정수로 변경
-        String hsd = x + "";
-        // 2. 정수를 각 자리별로 받은 후 정수로 바꿔서 더하기
-        String[] arr = hsd.split("");
-        for (String a : arr){
-            sum += Integer.parseInt(a);
+        while (x > 0) {
+            hap += x % 10;
+            x /= 10;
         }
-        // 3. 히샤드 수인지 판별
-        if (x % sum != 0){
-            answer = false;
-        }
-        return answer;
+        
+        return real % hap == 0 ? true : false;
     }
 }
