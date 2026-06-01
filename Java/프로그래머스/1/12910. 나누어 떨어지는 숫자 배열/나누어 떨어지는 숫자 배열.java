@@ -1,24 +1,23 @@
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 class Solution {
     public int[] solution(int[] arr, int divisor) {
-        ArrayList<Integer> answer = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
         
-        for (int a : arr){
+        for (int a : arr) {
             if (a % divisor == 0) {
-                answer.add(a);
+                list.add(a);
             }
         }
         
-        if (answer.size() == 0){
-            answer.add(-1);
+        if (list.size() < 1) {
+            return new int[]{-1};
         }
         
+        Collections.sort(list);
         
-        int[] an = answer.stream().mapToInt(Integer::intValue).toArray();
-        
-        Arrays.sort(an);
-        
-        return an;
+        return list.stream().mapToInt(Integer::intValue).toArray();
     }
 }
