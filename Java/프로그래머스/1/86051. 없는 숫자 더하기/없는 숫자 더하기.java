@@ -1,9 +1,11 @@
 class Solution {
     public int solution(int[] numbers) {
-        int answer = 45;
-        for (int i : numbers){
-            answer -= i;
+        int max = 45;
+        
+        for (int i : numbers) {
+            max -= i;
         }
-        return answer;
+        
+        return max;
     }
 }
