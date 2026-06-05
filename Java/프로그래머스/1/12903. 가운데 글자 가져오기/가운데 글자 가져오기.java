@@ -1,13 +1,5 @@
 class Solution {
     public String solution(String s) {
-        String answer = "";
-        int len = s.length();
-        
-        if (len % 2 == 0){
-            answer = "" + s.charAt(len/2 -1) + s.charAt(len/2) ;
-        } else {
-            answer = s.charAt(len/2)+ "";
-        }
-        return answer;
+        return s.length() % 2 == 0 ? s.substring(s.length() / 2 - 1, s.length() / 2 + 1) : s.substring(s.length() / 2, s.length() / 2 + 1);
     }
 }
