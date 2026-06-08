@@ -1,46 +1,37 @@
 import java.util.*;
 
 class Solution {
-    // 깊이 우선 탐색 
-    // 연결된 노드 전부 방문 처리 -> 새로운 노드 발견시 네트워크 +1
-    boolean[] visited;
-    List<List<Integer>> graph;
-    
-    private void dfs(int n) {
-        visited[n] = true;
-        
-        for (int i : graph.get(n)) {
-            if (!visited[i]) {
-                dfs(i);
-            }
-        }
-    }
     
     public int solution(int n, int[][] computers) {
-        int answer = 0;
+        boolean[] visited = new boolean[n];        
+        Queue<Integer> que = new LinkedList<>();
         
-        visited = new boolean[n];
-        graph = new ArrayList<>();
+        // 네트워크 갯수
+        int cnt = 0;
         
-        for (int i=0; i<n; i++) {
-            graph.add(new ArrayList<>());
-        }
-        
-        for (int i=0; i<n; i++) {
-            for (int j=0; j<n; j++) {
-                if (computers[i][j] == 1) {
-                    graph.get(i).add(j);
+        // 모든 컴퓨터에서 시작
+        for (int i=0; i<n; i++) { 
+            if (visited[i]) continue;
+            
+            if (!visited[i]) {
+                visited[i] = true;
+                cnt ++;
+            }
+            
+            que.add(i);
+            
+            while (!que.isEmpty()) {
+                int now = que.poll();
+                
+                for (int j=0; j<n; j++) {
+                    if (computers[now][j] == 1 && !visited[j]) {
+                        que.add(j);
+                        visited[j] = true;
+                    }
                 }
             }
         }
         
-        for (int i = 0; i < n; i++) {
-            if (!visited[i]) {
-                answer ++;
-                dfs(i);
-            } 
-        }
-        
-        return answer;
+        return cnt;
     }
 }
