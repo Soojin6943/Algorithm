@@ -1,19 +1,19 @@
-import java.util.Stack;
+import java.util.*;
 
 class Solution {
     boolean solution(String s) {
-        Stack<Character> st = new Stack<>();
-
-        for (char ch : s.toCharArray()){
-            if (ch == '('){
-                st.push('(');
-            } else if (ch == ')' && !st.isEmpty()){
-                st.pop();
-            } else return false;
+        Stack<String> stack = new Stack<>();
+        
+        for(char c : s.toCharArray()) {
+            if (stack.isEmpty() && c == ')') return false;
             
+            if (c == '(') stack.push("(");
+            
+            if (c == ')') stack.pop(); 
         }
         
-        if (st.isEmpty()) return true;
-        else return false;
+        if (stack.isEmpty()) return true;
+        return false;
+        
     }
 }
