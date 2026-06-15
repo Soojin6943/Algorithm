@@ -1,16 +1,15 @@
 /**
-완전 탐색 = 깊이 우선 탐색
-- 스택 or 재귀
-- 더하거나 빼거나
-*/ 
+모든 정수들에 대해 +,- 접근
+완전 탐색 = 깊이 우선 탐색 = 재귀, 스택
+*/
+
 class Solution {
     static int cnt = 0;
-    public static void dfs(int[] numbers, int target, int depth, int now) {
-        // 종료 조건 (마지막 결과가 타겟과 같으면 카운트)
-        if (numbers.length == depth) {
-            if (now == target) {
-                cnt++;
-                System.out.println(cnt);
+    
+    static void dfs(int[] numbers, int target, int depth, int now) {
+        if (numbers.length == depth) { 
+            if (target == now) {
+                cnt ++;
             }
             return;
         }
@@ -20,6 +19,7 @@ class Solution {
     }
     
     public int solution(int[] numbers, int target) {
+        
         dfs(numbers, target, 0, 0);
         
         return cnt;
