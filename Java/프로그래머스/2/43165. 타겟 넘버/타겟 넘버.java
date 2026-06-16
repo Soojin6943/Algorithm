@@ -1,27 +1,30 @@
 /**
-너비 우선 탐색
-큐 - 지금 숫자, 인덱스
+원래라면 깊이 우선 탐색
+하지만 너비 우선 탐색으로 연습
+- 큐
+- 방문 확인
 */
 
 import java.util.*;
 
 class Solution {
-    
     public int solution(int[] numbers, int target) {
-        Deque<int[]> que = new ArrayDeque<>();     // 현재 값, 인덱스
+        // 현재 결과, 인덱스
+        Deque<int[]> que = new ArrayDeque<>(); 
         
-        que.add(new int[]{0, 0});   // 초기 시작 세팅
+        // 초기 세팅
+        que.offer(new int[]{0, 0});
         int cnt = 0;
         
-        while(!que.isEmpty()) {
-            int[] cur = que.pollFirst();
+        while (!que.isEmpty()) {
+            int[] cur = que.poll();
             int now = cur[0];
             int idx = cur[1];
             
-            if (idx == numbers.length) {
-                if (target == now) {
+            // 종료 조건
+            if (numbers.length == idx) {
+                if (now == target) {
                     cnt ++;
-                    continue;
                 }
                 continue;
             }
