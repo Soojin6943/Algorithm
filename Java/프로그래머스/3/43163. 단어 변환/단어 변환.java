@@ -1,47 +1,42 @@
-import java.util.*;
-
+/**
+최소 몇 단계
+너비우선탐색 - 큐
+깊이 우선 재귀
+*/
 class Solution {
-    boolean visited[];
-    class Word {
-        String name;
-        int depth;
+    static int result = 51;
+    public int solution(String begin, String target, String[] words) {
         
-        Word(String name, int depth) {
-            this.name = name;
-            this.depth = depth;
-        }
-    }
-    private int bfs(String begin, String target, String[] words) {
-        Deque<Word> que = new ArrayDeque<>();
-        que.add(new Word(begin, 0));
+        boolean[] visited = new boolean[words.length];
+        dfs(begin, target, words, visited, 0);
         
-        while (!que.isEmpty()) {
-            Word cur = que.poll();
-            
-            if (cur.name.equals(target)) {
-                return cur.depth;
-            }
-            
-            for (int j=0; j<words.length; j++) {
-                int cnt = 0;
-                for (int i=0; i<begin.length(); i++) {
-                    if (words[j].charAt(i) != cur.name.charAt(i)) cnt ++;
-                }
-                
-                if (cnt == 1 && !visited[j]) {
-                    visited[j] = true;
-                    que.add(new Word(words[j], cur.depth + 1));
-                }
-            }
-        }
-        return 0;
+        if (result == 51) return 0;
+        
+        return result;
+        
     }
     
-    public int solution(String begin, String target, String[] words) {
-        int answer = 0;
+    public static void dfs(String now, String target, String[] words, boolean[] visited, int depth) {
         
-        visited = new boolean[words.length];
-        answer = bfs(begin, target, words);
-        return answer;
+        if (now.equals(target)) {
+            result = Math.min(depth, result);
+            return;
+        }
+        
+        for (int i=0; i<words.length; i++) {
+            if (visited[i] == false) {
+                String next = words[i];
+                int cnt = 0;
+                for (int j=0; j<next.length(); j++) {
+                    if (now.charAt(j) != next.charAt(j)) {
+                        cnt ++;
+                    }
+                }
+                if (cnt != 1) continue;
+                visited[i] = true;
+                dfs(next, target, words, visited, depth + 1);
+                visited[i] = false;
+            }
+        }
     }
 }
