@@ -1,31 +1,33 @@
 // 깊이 우선 탐색
-// 완전 탐색
-
+// 스택, 재귀?
 
 class Solution {
-    public static void dfs(int now, int[][] computers, boolean[] visited) {
-        if (visited[now]) return;
-        visited[now] = true;
-        
-        for (int i=0; i<computers.length; i++) {
-            if (computers[now][i] == 1 && !visited[i]) {
-                dfs(i, computers, visited);
-            }
-        }
-    }
-    public int solution(int n, int[][] computers) {
-        int cnt = 0;
-        boolean[] visited = new boolean[n];
+    static boolean[] visited;
+    
+    public static void dfs(int k, int n, int[][] computers) {
+        if (visited[k]) return;
+        visited[k] = true;
         
         for (int i=0; i<n; i++) {
-            
-            if (!visited[i]) {
-                cnt ++;
-                
-                dfs(i, computers, visited);
+            if (computers[k][i] == 1 && !visited[i]) {
+                dfs(i, n, computers);
             }
         }
         
-        return cnt;
+    }
+    
+    public int solution(int n, int[][] computers) {
+        // 각 노드들 방문 여부
+        int net = 0;
+        visited = new boolean[n];
+        
+        for (int i=0; i<n; i++) {
+            if (!visited[i]) {
+                net ++;
+                dfs(i, n, computers);
+            }
+        }
+        
+        return net;
     }
 }
