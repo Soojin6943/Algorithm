@@ -1,27 +1,35 @@
-import java.util.*;
+import java.util.Deque;
+import java.util.ArrayDeque;
+import java.util.List;
+import java.util.ArrayList;
+
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        ArrayList<Integer> answer = new ArrayList<>();
-        Queue<Integer> day = new LinkedList<>();
         
-        // 남은 날짜 체크
+        Deque<Integer> que = new ArrayDeque<>();
+        
         for (int i=0; i<progresses.length; i++) {
-            int nam = 100 - progresses[i];
-            
-            day.offer(nam % speeds[i] == 0 ? nam / speeds[i] : nam / speeds[i] + 1);
+            int day = ((100 - progresses[i] - 1) / speeds[i]);
+            que.addLast(day);
         }
         
-        // [3,2,1,4,5,3]
-        while (!day.isEmpty()){
-            int p = day.peek();
-            int cnt = 0;
-            while (!day.isEmpty() && p >= day.peek()){
-                day.poll();
-                cnt += 1;
+        List<Integer> cnts = new ArrayList<>();
+        
+        int tmp = que.pollFirst();
+        int cnt = 1;
+        while(!que.isEmpty()) {
+            int now = que.pollFirst();
+            if (tmp >= now) {
+                cnt++;
+                continue;
             }
-            answer.add(cnt);
+            cnts.add(cnt);
+            cnt = 1;
+            tmp = now;
         }
+          
+        cnts.add(cnt);
         
-        return answer.stream().mapToInt(Integer::intValue).toArray();
+        return cnts.stream().mapToInt(Integer::intValue).toArray();
     }
 }
