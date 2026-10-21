@@ -1,16 +1,16 @@
-import java.util.*;
+import java.util.Arrays;
 
 public class Solution {
     public int[] solution(int []arr) {
-        ArrayList<Integer> answer = new ArrayList<>();
+        int[] temp = new int[arr.length];
+        int size = 0;
         
-        answer.add(arr[0]);
-        for (int i=1; i<arr.length; i++){
-            if (arr[i] != arr[i-1]){
-                answer.add(arr[i]);
+        for (int n : arr) {
+            if (size == 0 || temp[size - 1] != n) {
+                temp[size++] = n;
             }
         }
         
-        return answer.stream().mapToInt(Integer::intValue).toArray();
+        return Arrays.copyOf(temp, size);
     }
 }
