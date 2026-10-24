@@ -1,28 +1,28 @@
-import java.util.*;
+import java.util.PriorityQueue;
 
 class Solution {
     public int solution(int[] scoville, int K) {
         int answer = 0;
+        
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         
-        // 우선 순위 큐에 스코빌 지수 담기
-        for (int i : scoville){
-            pq.offer(i);
+        for (int s : scoville) {
+            pq.offer(s);
         }
         
-        // 
-        while (pq.peek() < K && pq.size() >= 2){
-            int first = pq.poll();
-            int second = pq.poll();
-            int newS = first + second*2;
+        while(true) {
+            if (pq.size() <= 1) break;
+            
+            int f = pq.poll();
+            int s = pq.poll();
+            
+            if (f >= K) break;
+            
+            int newS = f + (s * 2);
             pq.offer(newS);
-            answer ++;
+            answer++;
         }
         
-        if (pq.peek() < K){
-            answer = -1;
-        }
-    
         return answer;
     }
 }
