@@ -1,35 +1,40 @@
-import java.util.Deque;
-import java.util.ArrayDeque;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
         
         Deque<Integer> que = new ArrayDeque<>();
+        List<Integer> result = new ArrayList<>();
         
+        
+        // day 계산
         for (int i=0; i<progresses.length; i++) {
-            int day = ((100 - progresses[i] - 1) / speeds[i]);
+            // 이게 + 1만 해줘도 되는가?
+            int day = (100 - progresses[i] - 1) / speeds[i] + 1;
+            
             que.addLast(day);
         }
         
-        List<Integer> cnts = new ArrayList<>();
-        
-        int tmp = que.pollFirst();
+        int max = que.pollFirst();
         int cnt = 1;
-        while(!que.isEmpty()) {
+        
+        while (!que.isEmpty()) {
             int now = que.pollFirst();
-            if (tmp >= now) {
-                cnt++;
+            
+            if (now > max) {
+                max = now;
+                result.add(cnt);
+                cnt = 1;
                 continue;
             }
-            cnts.add(cnt);
-            cnt = 1;
-            tmp = now;
+            
+            cnt ++;
         }
-          
-        cnts.add(cnt);
         
-        return cnts.stream().mapToInt(Integer::intValue).toArray();
+        result.add(cnt);
+        
+        return result.stream()
+            .mapToInt(Integer::intValue)
+            .toArray();
     }
 }
