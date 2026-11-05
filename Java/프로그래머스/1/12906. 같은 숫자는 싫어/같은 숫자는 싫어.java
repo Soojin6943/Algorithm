@@ -1,16 +1,30 @@
-import java.util.Arrays;
+import java.util.*;
 
 public class Solution {
     public int[] solution(int []arr) {
-        int[] temp = new int[arr.length];
-        int size = 0;
+        Deque<Integer> que = new ArrayDeque<>();
         
-        for (int n : arr) {
-            if (size == 0 || temp[size - 1] != n) {
-                temp[size++] = n;
+        for (int a : arr) {
+            if (que.isEmpty()) {
+                que.addLast(a);
+                // System.out.println("비어있는 값" + a);
+                continue;
             }
+            if (que.peekLast() == a) {
+                // System.out.println("중복된 값" + a);
+                continue;
+            }
+            // System.out.println("연속되지 않은 값" + a);
+            que.addLast(a);
         }
         
-        return Arrays.copyOf(temp, size);
+        
+        int[] result = new int[que.size()];
+        
+        for (int i=0; i<result.length; i++) {
+            result[i] = que.pollFirst();
+        }
+        
+        return result;
     }
 }
