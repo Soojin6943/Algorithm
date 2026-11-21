@@ -1,0 +1,4 @@
+-- 코드를 입력하세요
+SELECT NAME, DATE_FORMAT(DATETIME, '%Y-%m-%d %H:%i:%s')
+FROM ANIMAL_INS
+ORDER BY ANIMAL_ID desc;
